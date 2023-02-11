@@ -22,6 +22,9 @@ _LOGGER = logging.getLogger(__name__)
 
 SUPPORT_HVAC = [HVAC_MODE_HEAT, HVAC_MODE_OFF]
 
+ATTR_UNDERFLOOR_TEMP = "underfloor_temperature"
+ATTR_UNDERFLOOR_WITHIN_LIMITS = "underfloor_within_limits"
+
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up entry."""
     _LOGGER.debug("Setting up entry, module udid: " + config_entry.data["udid"])
@@ -74,6 +77,14 @@ class TechThermostat(ClimateEntity):
             self._mode = HVAC_MODE_HEAT
         else:
             self._mode = HVAC_MODE_OFF
+        self._underfloor_temperature = None
+        self._underfloor_within_limits = None
+        if "underfloor" in device:
+          underfloor = device["underfloor"]
+          if "temperature" in underfloor:
+            self._underfloor_temperature = underfloor["temperature"] / 10
+          if "currentState" in underfloor:
+            self._underfloor_within_limits = underfloor["currentState"] == "parametersReached"
 
     @property
     def unique_id(self) -> str:
@@ -134,6 +145,27 @@ class TechThermostat(ClimateEntity):
     def target_temperature(self):
         """Return the temperature we try to reach."""
         return self._target_temperature
+
+    @property
+    def underfloor_temperature(self):
+        """Return the underfloor temperature."""
+        return self._underfloor_temperature
+
+    @property
+    def underfloor_within_limits(self):
+        """Return boolean indicating whether underfloor temperature is within limits."""
+        return self._underfloor_within_limits
+
+    @property
+    def extra_state_attributes(self):
+        """Return the extra state attributes."""
+        attrs = {
+          ATTR_UNDERFLOOR_TEMP: self.underfloor_temperature,
+          ATTR_UNDERFLOOR_WITHIN_LIMITS: self.underfloor_within_limits,
+        }
+        if super().extra_state_attributes is not None:
+          attrs.update(super().extra_state_attributes)
+        return attrs
 
     async def async_set_temperature(self, **kwargs):
         """Set new target temperatures."""
