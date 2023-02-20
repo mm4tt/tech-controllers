@@ -110,7 +110,7 @@ class Tech:
                 _LOGGER.debug("Updating module zones cache..." + module_udid)    
                 result = await self.get_module_data(module_udid)
                 zones = result["zones"]["elements"]
-                zones = list(filter(lambda e: e['zone']['zoneState'] != "zoneUnregistered", zones))
+                zones = list(filter(lambda e: e['zone']['zoneState'] != "zoneUnregistered" and e['zone']['visibility'], zones))
                 for zone in zones:
                     self.zones[zone["zone"]["id"]] = zone
                 self.last_update = now
