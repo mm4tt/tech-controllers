@@ -34,7 +34,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     entities = []
     for zone in zones:
-        _LOGGER.inf("TECH: Processing zone: %s (%s)" %(zone, zones[zone]["description"]["name"]))
+        _LOGGER.info("TECH: Processing zone: %s (%s)" %(zone, zones[zone]["description"]["name"]))
         t = TechThermostat(
             zones[zone],
             api,
