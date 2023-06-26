@@ -24,7 +24,7 @@ Before creating bug reports, please check [this issues list](https://github.com/
 logger:
   default: info
   logs:
-    homeassistant.components.tech: debug
+    custom_components.tech: debug
 ```
 2. Restart your Home Assistant.
 
