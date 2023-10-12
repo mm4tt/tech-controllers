@@ -3,12 +3,12 @@
   "name": "Tech Controllers",
   "integration_type": "hub",
   "config_flow": true,
-  "documentation": "https://github.com/MichalKrasowski/tech-controllers",
-  "issue_tracker": "https://github.com/MichalKrasowski/tech-controllers/issues",
+  "documentation": "https://github.com/daroga0002/tech-controllers",
+  "issue_tracker": "https://github.com/daroga0002/tech-controllers/issues",
   "requirements": [],
   "dependencies": [],
   "codeowners": [
-    "@MichalKrasowski"
+    "@daroga0002"
   ],
   "version": "1.0.0"
 }

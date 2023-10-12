@@ -89,6 +89,7 @@ class Tech:
             result = await self.get(path)
         else:
             raise TechError(401, "Unauthorized")
+        _LOGGER.debug(result)
         return result
     
     async def get_module_zones(self, module_udid):
@@ -109,6 +110,7 @@ class Tech:
             if self.last_update is None or now > self.last_update + self.update_interval:
                 _LOGGER.debug("Updating module zones cache..." + module_udid)    
                 result = await self.get_module_data(module_udid)
+                _LOGGER.debug(result)
                 zones = result["zones"]["elements"]
                 zones = list(filter(lambda e: e['zone']['zoneState'] != "zoneUnregistered" and e['zone']['visibility'], zones))
                 for zone in zones:
