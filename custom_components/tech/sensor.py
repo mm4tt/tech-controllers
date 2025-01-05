@@ -11,9 +11,9 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up entry."""
-    _LOGGER.debug("Setting up entry, module udid: " + config_entry.data["udid"])
+    module_udid = config_entry.data["module"]["udid"]
+    _LOGGER.debug("Setting up entry, module udid: " + module_udid)
     api = hass.data[DOMAIN][config_entry.entry_id]
-    module_udid = config_entry.data["udid"]
     zones = await api.get_module_zones(module_udid)
 
     entities = []
