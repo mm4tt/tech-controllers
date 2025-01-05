@@ -65,6 +65,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user", data_schema=DATA_SCHEMA, errors=errors
         )
 
+    async def async_migrate_entry(hass, config_entry: ConfigEntry):
+        return True
 
 class CannotConnect(exceptions.HomeAssistantError):
     """Error to indicate we cannot connect."""
